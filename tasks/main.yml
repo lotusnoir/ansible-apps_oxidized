@@ -1,0 +1,87 @@
+---
+- name: "Check for oxidized installation"
+  stat:
+    path: '/usr/local/bin/oxidized'
+  changed_when: false
+  register: oxidized_binary
+
+- when: not oxidized_binary.stat.exists
+  block:
+    - name: "Install base packages"
+      package:
+        name: "{{ item }}"
+        state: "present"
+      with_items:
+        - "ruby"
+        - "ruby-dev"
+        - "libsqlite3-dev"
+        - "libssl-dev"
+        - "pkg-config"
+        - "cmake"
+        - "libssh2-1-dev"
+        - "libicu-dev"
+        - "zlib1g-dev"
+        - "g++"
+
+    - name: "Add the user oxidized"
+      user:
+        name: oxidized
+        shell: /usr/sbin/nologin
+
+    - name: "Install gem oxidized"
+      gem:
+        name: "{{ item }}"
+        state: present
+        user_install: false
+      with_items:
+        - oxidized
+        - oxidized-script
+        - oxidized-web
+
+    - name: "Create directories"
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: oxidized
+        group: oxidized
+        mode: '0755'
+      with_items:
+        - "/var/run/oxidized/"
+        - "{{ oxidized_log_dir }}"
+        - "{{ oxidized_storage_dir }}/output"
+        - "{{ oxidized_config_dir }}/.config/"
+        - "{{ oxidized_config_dir }}/.config/oxidized/"
+        - "{{ oxidized_config_dir }}/.config/oxidized/model"
+
+    - name: "Copy oxidized systemd init script"
+      template:
+        src: oxidized.service
+        dest: "/etc/systemd/system/oxidized.service"
+        mode: '0644'
+
+- name: "Enable and start oxidized"
+  systemd:
+    name: oxidized
+    enabled: true
+    state: started
+
+- name: "Copy model file"
+  template:
+    src: "{{ item }}"
+    # dest: "{{ oxidized_config_dir }}/.config/oxidized/model/{{ item }}"
+    dest: "/var/lib/gems/2.5.0/gems/oxidized-0.28.0/lib/oxidized/model/{{ item }}"
+    owner: oxidized
+    group: oxidized
+    mode: '0644'
+  with_items: "{{ oxidized_model_files }}"
+  notify: restart oxidized
+
+- name: "Copy config file"
+  template:
+    src: "{{ item }}"
+    dest: "{{ oxidized_config_dir }}/.config/oxidized/{{ item }}"
+    owner: oxidized
+    group: oxidized
+    mode: '0644'
+  with_items: "{{ oxidized_config_files }}"
+  notify: restart oxidized

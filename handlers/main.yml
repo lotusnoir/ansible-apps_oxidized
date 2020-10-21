@@ -1,0 +1,5 @@
+---
+- name: "restart oxidized"
+  service:
+    name: oxidized
+    state: restarted

@@ -1,0 +1,15 @@
+---
+oxidized_user:  oxidized
+oxidized_passwd: "strongpasswrd"
+oxidized_config_dir: /home/oxidized
+oxidized_storage_dir: /data/oxidized
+oxidized_log_dir: /var/log/oxidized
+oxidized_log_debug: false
+oxidized_web_listen: 0.0.0.0
+oxidized_web_port: 8888
+oxidized_config_files:
+  - config
+  - router.db
+oxidized_model_files:
+  - isamfx.rb
+  - smartax5600.rb
