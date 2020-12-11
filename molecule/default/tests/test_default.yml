@@ -1,0 +1,27 @@
+---
+command:
+  gem list | grep oxidized | grep 0.28.0:
+    exit-status: 0
+    stdout:
+      - "oxidized (0.28.0)"
+file:
+  /home/oxidized/.config/oxidized/config:
+    exists: true
+    mode: "0644"
+    owner: oxidized
+    group: oxidized
+service:
+  oxidized:
+    enabled: true
+    running: true
+process:
+  oxidized:
+    running: true
+port:
+  tcp:8888:
+    listening: true
+    ip:
+      - '0.0.0.0'
+http:
+  http://localhost:8888/nodes:
+    status: 200
