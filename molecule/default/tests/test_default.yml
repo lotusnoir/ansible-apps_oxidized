@@ -3,7 +3,7 @@ command:
   gem list | grep oxidized | grep 0.28.0:
     exit-status: 0
     stdout:
-      - "oxidized (0.28.0)"
+      - "oxidized (0.28.0, 0.26.3)"
 file:
   /home/oxidized/.config/oxidized/config:
     exists: true

@@ -11,3 +11,34 @@ oxidized_web_listen: 0.0.0.0
 oxidized_web_port: 8888
 oxidized_config_files: []
 oxidized_model_files: []
+
+oxidized_pid: "/var/run/oxidized/oxidized.pid"
+oxidized_auth_method:
+  - publickey
+  - password
+  - keyboard-interactive
+
+oxidized_config_groups:
+  - name: arubarouter
+    username: oxidized
+    password: 'xxxxxxxxx'
+  - name: huaweidslam
+    username: oxidized
+    password: 'xxxxxxxxxx'
+    vars: |
+      ssh_no_keepalive: true
+      ssh_encryption: 3des-cbc
+      ssh_hmac: hmac-md5
+      ssh_kex: diffie-hellman-group1-sha1
+
+#oxidized_config_hooks: |
+#  slack:
+#    type: slackdiff
+#    events: [post_store]
+#    token: xxxxxxxxxxxxxxxxxxxxxxxxxx
+#    channel: "#network_changes"
+#  failed_logfile:
+#    type: exec
+#    events: [node_fail]
+#    async: true
+#    cmd: 'echo "oxidized backup failure : node $OX_NODE_NAME group $OX_NODE_GROUP timestamp $(date +%Y%m%d-%H%M%S) job_status $OX_JOB_STATUS" >> {{ oxidized_log_dir }}/oxidized_node_failure.log'

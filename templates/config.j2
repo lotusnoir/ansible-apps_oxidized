@@ -11,63 +11,26 @@ timeout: 60
 retries: 1
 rest: {{ oxidized_web_listen }}:{{ oxidized_web_port }}
 next_adds_job: false
+pid: "{{ oxidized_pid }}"
 vars:
-  auth_methods: [ "publickey", "password", "keyboard-interactive" ]
-groups:
-  arubarouter:
-     username: oxidized
-     password: $2y$10$Gp
-  arubahqswitch:
-     username: oxidized.procurve.aruba
-     password: FVP0+BLM8WfVqQ
-  aristaclientrouter:
-     username: oxidized.7050s-client.arista
-     password: Ui6CZZjRPDM7rA
-     vars:
-        enable: true
-  aristadcrouter:
-     username: oxidized.7050s-dc.arista
-     password: Ui6CZZjRPDM7rA
-     vars:
-        enable: true
-  fortigatefw:
-     username: oxidized
-     password: $2y$10$Gp
-  huaweidslam:
-     username: oxidized
-     password: Vc0InGopnAca0g
-     vars:
-        ssh_no_keepalive: true
-        ssh_encryption: 3des-cbc
-        ssh_hmac: hmac-md5
-        ssh_kex: diffie-hellman-group1-sha1
-  nokiarouter:
-     username: oxidized.sros.nokia
-     password: sWzu8570WUzYaA
-     vars:
-        ssh_kex: diffie-hellman-group1-sha1
-  nokiaolt:
-     username: isadmin
-     password: 'ANS#150'
-     vars:
-        ssh_no_keepalive: true
-        ssh_host_key: ssh-rsa,ssh-dss
-#models:
-#  smartax5600:
-#     vars:
-#        ssh_no_keepalive: true
-#        ssh_encryption: 3des-cbc
-#        ssh_hmac: hmac-md5
-#        ssh_kex: diffie-hellman-group1-sha1
-pid: "/var/run/oxidized/oxidized.pid"
+  auth_methods: [ "{{ oxidized_auth_method | join('", "') }}" ]
 
+groups:
+{% for grp in oxidized_config_groups %}
+  {{ grp.name }}:
+    username: {{ grp.username }}
+    password: {{ grp.password }}
+{% if grp.vars is defined %}
+    vars:
+      {{ grp.vars|indent(6) }}
+{% endif %}
+{% endfor %}
 
 input:
   default: ssh
   debug: {{ oxidized_log_debug }}
   ssh:
     secure: false
-
 
 output:
   default: git
@@ -77,7 +40,6 @@ output:
     user: Oxidized
     email: o@example.com
     repo: "{{ oxidized_storage_dir }}/output/oxidized.git"
-
 
 source:
   default: csv
@@ -89,17 +51,12 @@ source:
       model: 1
       group: 2
     gpg: false
+
 model_map:
   cisco: ios
   juniper: junos
+
+{% if oxidized_config_hooks is defined %}
 hooks:
-#  slack:
-#    type: slackdiff
-#    events: [post_store]
-#    token: xoxb-348267620273-F7eAu86H7BW8PNiKvRRMQNoZ
-#    channel: "#network_changes"
-  failed_logfile:
-    type: exec
-    events: [node_fail]
-    async: true
-    cmd: 'echo "oxidized backup failure : node $OX_NODE_NAME group $OX_NODE_GROUP timestamp $(date +%Y%m%d-%H%M%S) job_status $OX_JOB_STATUS" >> {{ oxidized_log_dir }}/oxidized_node_failure.log'
+  {{ oxidized_config_hooks|indent(2) }}
+{% endif %}
