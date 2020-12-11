@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/lotusnoir/ansible-apps_oxidized.svg?branch=master?style=flat)](https://travis-ci.com/lotusnoir/ansible-apps_oxidized)
 [![License](https://img.shields.io/badge/license-Apache--2.0-brightgreen?style=flat)](https://opensource.org/licenses/Apache-2.0)
 [![Ansible Role](https://img.shields.io/badge/galaxy-apps_oxidized-purple?style=flat)](https://galaxy.ansible.com/lotusnoir/apps_oxidized)
-[![GitHub tag](https://img.shields.io/badge/version-latest-blue?style=flat)](https://github.com/lotusnoir/ansible-apps_oxidized/releases/tag/0.28.0)
+[![GitHub tag](https://img.shields.io/badge/version-0.28.0-blue?style=flat)](https://github.com/lotusnoir/ansible-apps_oxidized/releases/tag/0.28.0)
 
 Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration backup toole.
 
