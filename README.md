@@ -2,7 +2,10 @@
 
 ## Description
 
-[![Build Status](https://travis-ci.com/lotusnoir/ansible-apps_oxidized.svg?branch=master)](https://travis-ci.com/lotusnoir/ansible-apps_oxidized)[![License](https://img.shields.io/badge/license-Apache--2.0-brightgreen)](https://opensource.org/licenses/Apache-2.0)[![Ansible Role](https://img.shields.io/badge/ansible%20role-apps__oxidized-blue)](https://galaxy.ansible.com/lotusnoir/ansible-apps_oxidized/)[![GitHub tag](https://img.shields.io/badge/version-latest-blue)](https://github.com/lotusnoir/ansible-apps_oxidized/tags)
+[![Build Status](https://travis-ci.com/lotusnoir/ansible-apps_oxidized.svg?branch=master?style=flat)](https://travis-ci.com/lotusnoir/ansible-apps_oxidized)
+[![License](https://img.shields.io/badge/license-Apache--2.0-brightgreen?style=flat)](https://opensource.org/licenses/Apache-2.0)
+[![Ansible Role](https://img.shields.io/badge/galaxy-apps_oxidized-purple?style=flat)](https://galaxy.ansible.com/lotusnoir/apps_oxidized)
+[![GitHub tag](https://img.shields.io/badge/version-latest-blue?style=flat)](https://github.com/lotusnoir/ansible-apps_oxidized/releases/tag/0.28.0)
 
 Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration backup toole.
 
@@ -36,6 +39,11 @@ Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration back
 	    http_proxy: "{{ http_proxy }}"
 	    https_proxy: "{{ https_proxy }}"
 	    no_proxy: "{{ no_proxy }}
+
+## Monitoring
+
+Monitoring this tool can be done with a [prometheus exporter](https://github.com/lotusnoir/ansible-apps_oxidized_exporter). You will get the status for each backup.
+
 
 ## License
 
