@@ -8,7 +8,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/lotusnoir/ansible-apps_oxidized?color=orange&style=flat)
 ![Ansible Quality Score](https://img.shields.io/ansible/quality/52300)
 [![downloads](https://img.shields.io/ansible/role/d/52300)](https://galaxy.ansible.com/lotusnoir/apps_oxidized)
-[![Version](https://img.shields.io/github/release/lotusnoir/apps_oxidized.svg)](https://github.com/lotusnoir/ansible-apps_oxidized/releases/)
+[![Version](https://img.shields.io/github/release/lotusnoir/ansible-apps_oxidized.svg)](https://github.com/lotusnoir/ansible-apps_oxidized/releases/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=alert_status)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized) 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized)
