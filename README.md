@@ -7,7 +7,6 @@
 [![Ansible Role](https://img.shields.io/badge/galaxy-apps_oxidized-purple?style=flat)](https://galaxy.ansible.com/lotusnoir/apps_oxidized)
 [![GitHub tag](https://img.shields.io/badge/version-0.28.0-blue?style=flat)](https://github.com/lotusnoir/ansible-apps_oxidized/releases/tag/0.28.0)
 ![GitHub repo size](https://img.shields.io/github/repo-size/lotusnoir/ansible-apps_oxidized?color=orange&style=flat)
-
 ![Ansible Quality Score](https://img.shields.io/ansible/quality/47557)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=alert_status)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized) 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized)
@@ -19,20 +18,20 @@ Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration back
 
 ## Role variables
 
-| Name           | Default Value | Description                        |
-| -------------- | ------------- | -----------------------------------|
-| `oxidized_version` | 0.28.0 | oxidized version |
-| `oxidized_user` | oxidized | oxidized system user |
-| `oxidized_group` | oxidized | oxidized system group |
-| `oxidized_passwd` | oxidized | oxidized system user password|
-| `oxidized_config_dir` | /home/oxidized | config directory |
-| `oxidized_storage_dir` | /data/oxidized | location for config files backup |
-| `oxidized_log_dir` | /var/log/oxidized | log file location |
-| `oxidized_log_debug` | false | debug mode |
-| `oxidized_web_listen` | 0.0.0.0 | web listen port|
-| `oxidized_web_port` | 8888 | web listen port |
-| `oxidized_config_files` |  | location of the extra config files|
-| `oxidized_model_files` |  | location of the model files|
+| Name                    | Default Value     | Description                        |
+| ----------------------- | ----------------- | -----------------------------------|
+| `oxidized_version`      | 0.28.0            | oxidized version                   |
+| `oxidized_user`         | oxidized          | oxidized system user               |
+| `oxidized_group`        | oxidized          | oxidized system group              |
+| `oxidized_passwd`       | oxidized          | oxidized system user password      |
+| `oxidized_config_dir`   | /home/oxidized    | config directory                   |
+| `oxidized_storage_dir`  | /data/oxidized    | location for config files backup   |
+| `oxidized_log_dir`      | /var/log/oxidized | log file location                  |
+| `oxidized_log_debug`    | false             | debug mode                         |
+| `oxidized_web_listen`   | 0.0.0.0           | web listen port                    |
+| `oxidized_web_port`     | 8888              | web listen port                    |
+| `oxidized_config_files` |                   | location of the extra config files |
+| `oxidized_model_files`  |                   | location of the model files        |
 
 ## Examples
 
