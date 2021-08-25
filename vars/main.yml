@@ -1,8 +1,8 @@
 ---
 oxidivzed_packages:
-  - { name: oxidized, version: "{{ oxidized_version }}" }
-  - { name: oxidized-script }
-  - { name: oxidized-web }
+  - {name: oxidized, version: "{{ oxidized_version }}"}
+  - {name: oxidized-script}
+  - {name: oxidized-web}
 
 oxidivzed_req_packages:
   - "ruby"

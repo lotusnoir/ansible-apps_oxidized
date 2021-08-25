@@ -14,8 +14,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=lotusnoir_ansible-apps_oxidized&metric=security_rating)](https://sonarcloud.io/dashboard?id=lotusnoir_ansible-apps_oxidized)
 
-
-Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration backup toole.
+Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration backup tool.
 
 ## Role variables
 

@@ -1,0 +1,97 @@
+---
+- name: "Check for oxidized installation"
+  stat:
+    path: '/usr/local/bin/oxidized'
+  changed_when: false
+  register: oxidized_binary
+
+- when: not oxidized_binary.stat.exists
+  block:
+    - name: "Install base packages"
+      package:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - "{{ oxidivzed_req_packages }}"
+
+    - name: "Ensure oxidized group"
+      group:
+        name: '{{ oxidized_group }}'
+        system: true
+        state: present
+
+    - name: "Ensure oxidized user"
+      user:
+        name: '{{ oxidized_user }}'
+        group: '{{ oxidized_group }}'
+        system: true
+        shell: '/usr/sbin/nologin'
+        createhome: false
+
+    - name: "Install gem oxidized"
+      gem:
+        name: '{{ item.name }}'
+        version: "{{ item.version | default(omit)  }}"
+        state: "{{ 'present' if item.version is defined else 'latest' }}"
+        user_install: false
+      with_items:
+        - "{{ oxidivzed_packages }}"
+
+    - name: "Create directories"
+      file:
+        path: '{{ item }}'
+        state: directory
+        owner: '{{ oxidized_user }}'
+        group: '{{ oxidized_group }}'
+        mode: '0755'
+      with_items:
+        - "/var/run/oxidized/"
+        - "{{ oxidized_log_dir }}"
+        - "{{ oxidized_storage_dir }}/output"
+        - "{{ oxidized_config_dir }}/.config/"
+        - "{{ oxidized_config_dir }}/.config/oxidized/"
+        - "{{ oxidized_config_dir }}/.config/oxidized/model"
+
+- name: "Copy oxidized systemd init script"
+  template:
+    src: 'oxidized.service.j2'
+    dest: '/etc/systemd/system/oxidized.service'
+    mode: '0644'
+  notify: restart oxidized
+
+- name: "Copy config file"
+  template:
+    src: "config.j2"
+    dest: '{{ oxidized_config_dir }}/.config/oxidized/config'
+    owner: '{{ oxidized_user }}'
+    group: '{{ oxidized_group }}'
+    mode: '0644'
+  notify: restart oxidized
+
+- name: "Copy custom config files"
+  copy:
+    src: '{{ item }}'
+    dest: '{{ oxidized_config_dir }}/.config/oxidized/'
+    owner: '{{ oxidized_user }}'
+    group: '{{ oxidized_group }}'
+    mode: '0644'
+  with_fileglob: "{{ oxidized_config_files }}"
+  notify:
+    - restart oxidized
+
+- name: "Copy custom model files"
+  copy:
+    src: '{{ item }}'
+    dest: '/var/lib/gems/2.5.0/gems/oxidized-{{ oxidized_version }}/lib/oxidized/model/'
+    owner: '{{ oxidized_user }}'
+    group: '{{ oxidized_group }}'
+    mode: '0644'
+  with_fileglob: "{{ oxidized_model_files }}"
+  notify:
+    - restart oxidized
+
+- name: "Enable and start oxidized"
+  service:
+    name: oxidized
+    enabled: true
+    state: started
