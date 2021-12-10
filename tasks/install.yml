@@ -12,7 +12,7 @@
         name: '{{ item }}'
         state: present
       with_items:
-        - "{{ oxidivzed_req_packages }}"
+        - "{{ oxidized_req_packages }}"
 
     - name: "Ensure oxidized group"
       group:
@@ -35,7 +35,7 @@
         state: "{{ 'present' if item.version is defined else 'latest' }}"
         user_install: false
       with_items:
-        - "{{ oxidivzed_packages }}"
+        - "{{ oxidized_packages }}"
 
     - name: "Create directories"
       file:

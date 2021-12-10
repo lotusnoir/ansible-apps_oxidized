@@ -5,13 +5,14 @@ oxidized_packages:
   - {name: oxidized-web}
 
 oxidized_req_packages:
+  - "make"
   - "ruby"
-  - "ruby-dev"
-  - "libsqlite3-dev"
-  - "libssl-dev"
-  - "pkg-config"
+  - "ruby-devel"
+  - "sqlite-devel"
+  - "openssl-devel"
+  - "pkgconfig"
   - "cmake"
-  - "libssh2-1-dev"
-  - "libicu-dev"
-  - "zlib1g-dev"
-  - "g++"
+  - "libssh2-devel"
+  - "libicu-devel"
+  - "zlib-devel"
+  - "gcc-c++"
