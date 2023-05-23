@@ -1,27 +1,28 @@
 ---
 - name: "Check for oxidized installation"
-  stat:
+  ansible.builtin.stat:
     path: '/usr/local/bin/oxidized'
   changed_when: false
   register: oxidized_binary
 
-- when: not oxidized_binary.stat.exists
+- name: "Install tasks"
+  when: not oxidized_binary.stat.exists
   block:
     - name: "Install base packages"
-      package:
+      ansible.builtin.package:
         name: '{{ item }}'
         state: present
       with_items:
         - "{{ oxidized_req_packages }}"
 
     - name: "Ensure oxidized group"
-      group:
+      ansible.builtin.group:
         name: '{{ oxidized_group }}'
         system: true
         state: present
 
     - name: "Ensure oxidized user"
-      user:
+      ansible.builtin.user:
         name: '{{ oxidized_user }}'
         group: '{{ oxidized_group }}'
         system: true
@@ -29,7 +30,7 @@
         createhome: false
 
     - name: "Install gem oxidized"
-      gem:
+      community.general.gem:
         name: '{{ item.name }}'
         version: "{{ item.version | default(omit)  }}"
         state: "{{ 'present' if item.version is defined else 'latest' }}"
@@ -38,7 +39,7 @@
         - "{{ oxidized_packages }}"
 
     - name: "Create directories"
-      file:
+      ansible.builtin.file:
         path: '{{ item }}'
         state: directory
         owner: '{{ oxidized_user }}'
@@ -53,14 +54,14 @@
         - "{{ oxidized_config_dir }}/.config/oxidized/model"
 
 - name: "Copy oxidized systemd init script"
-  template:
+  ansible.builtin.template:
     src: 'oxidized.service.j2'
     dest: '/etc/systemd/system/oxidized.service'
     mode: '0644'
   notify: restart oxidized
 
 - name: "Copy config file"
-  template:
+  ansible.builtin.template:
     src: "config.j2"
     dest: '{{ oxidized_config_dir }}/.config/oxidized/config'
     owner: '{{ oxidized_user }}'
@@ -69,7 +70,7 @@
   notify: restart oxidized
 
 - name: "Copy custom config files"
-  copy:
+  ansible.builtin.copy:
     src: '{{ item }}'
     dest: '{{ oxidized_config_dir }}/.config/oxidized/'
     owner: '{{ oxidized_user }}'
@@ -80,7 +81,7 @@
     - restart oxidized
 
 - name: "Copy custom model files"
-  copy:
+  ansible.builtin.copy:
     src: '{{ item }}'
     dest: '/var/lib/gems/2.5.0/gems/oxidized-{{ oxidized_version }}/lib/oxidized/model/'
     owner: '{{ oxidized_user }}'
@@ -91,7 +92,7 @@
     - restart oxidized
 
 - name: "Enable and start oxidized"
-  service:
+  ansible.builtin.service:
     name: oxidized
     enabled: true
     state: started

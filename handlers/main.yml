@@ -1,5 +1,5 @@
 ---
 - name: "restart oxidized"
-  service:
+  ansible.builtin.service:
     name: oxidized
     state: restarted

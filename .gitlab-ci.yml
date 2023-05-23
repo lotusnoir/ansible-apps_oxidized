@@ -1,6 +1,7 @@
 ---
 stages:
-  - checks
+  - lint
+  - test
   - changes
   - push
 
@@ -9,10 +10,10 @@ variables:
 
 
 ##################################################
-# SYNTAX CHECKS
+# LINT
 ##################################################
 yamllint:
-  stage: checks
+  stage: lint
   image: sdesbure/yamllint
   before_script:
     - yamllint --version
@@ -20,10 +21,17 @@ yamllint:
     - yamllint .
 
 ansible-lint:
-  stage: checks
+  stage: lint
   image: lotusnoir/ansible_play
   script:
     - ansible-lint .
+
+
+##################################################
+# TEST / SECU
+##################################################
+include:
+  - template: Security/Secret-Detection.gitlab-ci.yml
 
 
 ######################################################
@@ -31,7 +39,7 @@ ansible-lint:
 ######################################################
 changelog:
   stage: changes
-  image: node:latest
+  image: node:19
   needs:
     - yamllint
     - ansible-lint
@@ -66,6 +74,7 @@ push_src_on_github:
     - COMMENT=$(git log -1 --pretty=%B | head -1)
   script:
     - git clone git@github.com:${GITHUB_USER}/ansible-apps_oxidized.git /tmp/ansible-apps_oxidized
+    - find /tmp/ansible-apps_oxidized -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf "{}" +;
     - rm -rf .git
     - cp -r . /tmp/ansible-apps_oxidized/
     - cd /tmp/ansible-apps_oxidized
