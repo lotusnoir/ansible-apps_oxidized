@@ -32,7 +32,7 @@
     - name: "Install gem oxidized"
       community.general.gem:
         name: '{{ item.name }}'
-        version: "{{ item.version | default(omit)  }}"
+        version: "{{ item.version | default(omit) }}"
         state: "{{ 'present' if item.version is defined else 'latest' }}"
         user_install: false
       with_items:
@@ -58,7 +58,7 @@
     src: 'oxidized.service.j2'
     dest: '/etc/systemd/system/oxidized.service'
     mode: '0644'
-  notify: restart oxidized
+  notify: "Restart oxidized"
 
 - name: "Copy config file"
   ansible.builtin.template:
@@ -67,7 +67,7 @@
     owner: '{{ oxidized_user }}'
     group: '{{ oxidized_group }}'
     mode: '0644'
-  notify: restart oxidized
+  notify: "Restart oxidized"
 
 - name: "Copy custom config files"
   ansible.builtin.copy:
@@ -77,8 +77,7 @@
     group: '{{ oxidized_group }}'
     mode: '0644'
   with_fileglob: "{{ oxidized_config_files }}"
-  notify:
-    - restart oxidized
+  notify: "Restart oxidized"
 
 - name: "Copy custom model files"
   ansible.builtin.copy:
@@ -88,8 +87,7 @@
     group: '{{ oxidized_group }}'
     mode: '0644'
   with_fileglob: "{{ oxidized_model_files }}"
-  notify:
-    - restart oxidized
+  notify: "Restart oxidized"
 
 - name: "Enable and start oxidized"
   ansible.builtin.service:
