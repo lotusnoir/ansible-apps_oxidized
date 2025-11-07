@@ -4,26 +4,29 @@ galaxy_info:
   role_name: apps_oxidized
   description: "Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration backup tool."
   license: "Apache License, Version 2.0"
-  min_ansible_version: 2.8
+  min_ansible_version: "2.8"
 
   platforms:
     - name: "Ubuntu"
       versions:
-        - "bionic"
         - "focal"
         - "jammy"
+        - "noble"
     - name: "Debian"
       versions:
         - "buster"
         - "bullseye"
         - "bookworm"
+        - "trixie"
     - name: "Rocky"
       versions:
+        - "10"
         - "9"
     - name: "OracleLinux"
       versions:
         - "8"
         - "9"
+        - "10"
     - name: "RedHat"
       versions:
         - "8"

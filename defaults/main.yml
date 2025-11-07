@@ -31,14 +31,20 @@ oxidized_config_groups:
       ssh_hmac: hmac-md5
       ssh_kex: diffie-hellman-group1-sha1
 
-#oxidized_config_hooks: |
-#  slack:
-#    type: slackdiff
-#    events: [post_store]
-#    token: xxxxxxxxxxxxxxxxxxxxxxxxxx
-#    channel: "#network_changes"
-#  failed_logfile:
-#    type: exec
-#    events: [node_fail]
-#    async: true
-#    cmd: 'echo "oxidized backup failure : node $OX_NODE_NAME group $OX_NODE_GROUP timestamp $(date +%Y%m%d-%H%M%S) job_status $OX_JOB_STATUS" >> {{ oxidized_log_dir }}/oxidized_node_failure.log'
+# oxidized_config_hooks: |
+#   slack:
+#     type: slackdiff
+#     events: [post_store]
+#     token: xxxxxxxxxxxxxxxxxxxxxxxxxx
+#     channel: "#network_changes"
+#   failed_logfile:
+#     type: exec
+#     events: [node_fail]
+#     async: true
+#     cmd: >-
+#       echo 'oxidized backup failure:
+#       node $OX_NODE_NAME
+#       group $OX_NODE_GROUP
+#       timestamp $(date +%Y%m%d-%H%M%S)
+#       job_status $OX_JOB_STATUS' >>
+#       {{ oxidized_log_dir }}/oxidized_node_failure.log

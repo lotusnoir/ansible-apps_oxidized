@@ -22,6 +22,7 @@
 ## Description
 
 Deploy [oxidized](https://github.com/ytti/oxidized) a network configuration backup tool.
+
 ## Requirements
 
 none
@@ -39,7 +40,6 @@ See [variables](/defaults/main.yml) for more details.
           gather_facts: true
           roles:
             - role: ansible-apps_oxidized
-
 
 ## License
 
